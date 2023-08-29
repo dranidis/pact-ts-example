@@ -4,7 +4,7 @@ import { DogService } from "./dogService";
 
 // Create a 'pact' between the two applications in the integration we are testing
 const provider = new PactV3({
-  dir: path.resolve(process.cwd(), "pacts"),
+  dir: path.resolve(process.cwd(), "../pacts"),
   consumer: "MyConsumer",
   provider: "MyProvider",
 });

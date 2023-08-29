@@ -10,7 +10,7 @@ describe("Pact Verification", () => {
       pactUrls: [
         path.resolve(
           process.cwd(),
-          "../pact-ts-consumer/pacts/MyConsumer-MyProvider.json"
+          "../pacts/MyConsumer-MyProvider.json"
         ),
       ],
     })
