@@ -9,7 +9,7 @@ const provider = new PactV3({
   provider: "MyProvider",
 });
 
-const dogExample = { dog: 1 };
+const dogExample = { id: 1, name: 'Frodo' };
 const EXPECTED_BODY = MatchersV3.eachLike(dogExample);
 
 describe("GET /dogs", () => {
@@ -20,7 +20,7 @@ describe("GET /dogs", () => {
     //
     // We use Pact to mock out the backend API
     provider
-      .given("I have a list of dogs")
+      .given("I have a non-empty list of dogs")
       .uponReceiving("a request for all dogs with the builder pattern")
       .withRequest({
         method: "GET",

@@ -7,7 +7,7 @@
       "description": "a request for all dogs with the builder pattern",
       "providerStates": [
         {
-          "name": "I have a list of dogs"
+          "name": "I have a non-empty list of dogs"
         }
       ],
       "request": {
@@ -25,7 +25,8 @@
       "response": {
         "body": [
           {
-            "dog": 1
+            "id": 1,
+            "name": "Frodo"
           }
         ],
         "headers": {
