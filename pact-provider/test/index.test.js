@@ -5,16 +5,7 @@ const dogRepository = require("../dogRepository.js");
 
 const { server } = require("../provider.js");
 
-// (1) Start provider locally. Be sure to stub out any external dependencies
-server.listen(8081, () => {
-  //   importData();
-  console.log("Animal Profile Service listening on http://localhost:8081");
-});
-
-console.log("REPO", dogRepository);
-
 const app = server.listen(8081, () => {
-  importData();
   console.log('Animal Profile Service listening on http://localhost:8081');
 });
 
@@ -31,8 +22,15 @@ describe("Pact Verification", () => {
       ],
       stateHandlers: {
         "I have a non-empty list of dogs": () => {
-          dogRepository.insert({ id: 1, name: "Fido" });
-          console.log("🎃 REPO", dogRepository);
+          dogRepository.clearAll();
+          
+          dogRepository.insert({ id: 11, name: "Fido", age: 3 });
+          // dogRepository.insert({ id: 12, name: "Ada", age: 3 });
+          // dogRepository.insert({ id: 11, age: 3 });
+          // dogRepository.insert({ id: 11, name: {s: "Ida"}, age: 3 });
+          // dogRepository.insert({ id: 11, name: 3, age: 3 });
+
+          console.log("REPO", dogRepository);
           return Promise.resolve({
             description: `A dog was added to the db`
           });

@@ -4,7 +4,7 @@
   },
   "interactions": [
     {
-      "description": "a request for all dogs with the builder pattern",
+      "description": "a request for all dogs for today",
       "providerStates": [
         {
           "name": "I have a non-empty list of dogs"
@@ -39,7 +39,7 @@
               "matchers": [
                 {
                   "match": "type",
-                  "min": 1
+                  "min": 2
                 }
               ]
             }

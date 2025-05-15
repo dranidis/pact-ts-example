@@ -4,7 +4,7 @@ const dogRepository = require("./dogRepository.js");
 const server = express();
 
 server.get("/dogs", function (req, res) {
-    console.log("🚀", dogRepository.fetchAll());
+    console.log("Fetching...", dogRepository.fetchAll());
     res.json(dogRepository.fetchAll());
 });
 
