@@ -1,32 +1,31 @@
 import { PactV3, MatchersV3 } from "@pact-foundation/pact";
 import path from "path";
-import { DogService } from "./dogService";
+import { ProductsAPIClient } from "./productsAPIClient";
 
 // Create a 'pact' between the two applications in the integration we are testing
 const provider = new PactV3({
   dir: path.resolve(process.cwd(), "../pacts"),
-  consumer: "MyConsumer",
-  provider: "MyProvider",
+  consumer: "ProductsUI",
+  provider: "ProductsAPI",
 });
 
-const dogExample = { id: 1, name: 'Frodo' };
+const productExample = { id: 1, name: "Wireless Mouse" };
 
-const EXPECTED_BODY = MatchersV3.eachLike(dogExample);
+const EXPECTED_BODY = MatchersV3.eachLike(productExample);
 
-describe("GET /dogs", () => {
-  let dogService: DogService;
+describe("GET /products", () => {
+  let productsAPIClient: ProductsAPIClient;
 
-  it("returns an HTTP 200 and a list of docs", () => {
+  it("returns an HTTP 200 and a list of products", () => {
     // Arrange: Setup our expected interactions
     //
     // We use Pact to mock out the backend API
     provider
-      .given("I have a non-empty list of dogs")
-      .uponReceiving("a request for all dogs for today")
+      .given("there is a non-empty list of products")
+      .uponReceiving("a request for all products")
       .withRequest({
         method: "GET",
-        path: "/dogs",
-        query: { from: "today" },
+        path: "/products",
         headers: { Accept: "application/json" },
       })
       .willRespondWith({
@@ -41,11 +40,11 @@ describe("GET /dogs", () => {
       // Note we configure the DogService API client dynamically to
       // point to the mock service Pact created for us, instead of
       // the real one
-      dogService = new DogService(mockserver.url);
-      const response = await dogService.getMeDogs("today");
+      productsAPIClient = new ProductsAPIClient(mockserver.url);
+      const response = await productsAPIClient.getAllProducts();
 
       // Assert: check the result
-      expect(response.data[0]).toEqual(dogExample);
+      expect(response.data[0]).toEqual(productExample);
     });
   });
 });

@@ -1,6 +1,6 @@
 {
   "consumer": {
-    "name": "MyConsumer"
+    "name": "ProductsUI"
   },
   "interactions": [
     {
@@ -15,7 +15,7 @@
           "Accept": "application/json"
         },
         "method": "GET",
-        "path": "/dogs",
+        "path": "/products",
         "query": {
           "from": [
             "today"
@@ -39,7 +39,48 @@
               "matchers": [
                 {
                   "match": "type",
-                  "min": 2
+                  "min": 1
+                }
+              ]
+            }
+          },
+          "header": {}
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a request for all products",
+      "providerStates": [
+        {
+          "name": "there is a non-empty list of products"
+        }
+      ],
+      "request": {
+        "headers": {
+          "Accept": "application/json"
+        },
+        "method": "GET",
+        "path": "/products"
+      },
+      "response": {
+        "body": [
+          {
+            "id": 1,
+            "name": "Wireless Mouse"
+          }
+        ],
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "body": {
+            "$": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type",
+                  "min": 1
                 }
               ]
             }
@@ -63,6 +104,6 @@
     }
   },
   "provider": {
-    "name": "MyProvider"
+    "name": "ProductsAPI"
   }
 }
