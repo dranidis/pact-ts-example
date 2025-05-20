@@ -2,7 +2,6 @@ import { PactV3, MatchersV3 } from "@pact-foundation/pact";
 import path from "path";
 import { ProductsAPIClient } from "./productsAPIClient";
 
-// Create a 'pact' between the two applications in the integration we are testing
 const provider = new PactV3({
   dir: path.resolve(process.cwd(), "../pacts"),
   consumer: "ProductsUI",
@@ -10,8 +9,6 @@ const provider = new PactV3({
 });
 
 const productExample = { id: 1, name: "Wireless Mouse" };
-
-const EXPECTED_BODY = MatchersV3.eachLike(productExample);
 
 describe("GET /products", () => {
   let productsAPIClient: ProductsAPIClient;
@@ -31,13 +28,13 @@ describe("GET /products", () => {
       .willRespondWith({
         status: 200,
         headers: { "Content-Type": "application/json" },
-        body: EXPECTED_BODY,
+        body: MatchersV3.eachLike(productExample),
       });
 
     return provider.executeTest(async (mockserver) => {
       // Act: test our API client behaves correctly
       //
-      // Note we configure the DogService API client dynamically to
+      // Note we configure the ProductsAPI client dynamically to
       // point to the mock service Pact created for us, instead of
       // the real one
       productsAPIClient = new ProductsAPIClient(mockserver.url);
@@ -45,6 +42,38 @@ describe("GET /products", () => {
 
       // Assert: check the result
       expect(response.data[0]).toEqual(productExample);
+    });
+  });
+
+  it("returns an HTTP 200 and a single product", () => {
+    // Arrange: Setup our expected interactions
+    //
+    // We use Pact to mock out the backend API
+    provider
+      .given("there exists a product with id 12345")
+      .uponReceiving("a request for a product with id 12345")
+      .withRequest({
+        method: "GET",
+        path: "/products/12345",
+        headers: { Accept: "application/json" },
+      })
+      .willRespondWith({
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+        body: MatchersV3.like(productExample),
+      });
+
+    return provider.executeTest(async (mockserver) => {
+      // Act: test our API client behaves correctly
+      //
+      // Note we configure the ProductsAPI client dynamically to
+      // point to the mock service Pact created for us, instead of
+      // the real one
+      productsAPIClient = new ProductsAPIClient(mockserver.url);
+      const response = await productsAPIClient.getProduct("12345");
+
+      // Assert: check the result
+      expect(response.data).toEqual(productExample);
     });
   });
 });

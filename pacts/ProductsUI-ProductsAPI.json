@@ -4,10 +4,10 @@
   },
   "interactions": [
     {
-      "description": "a request for all dogs for today",
+      "description": "a request for a product with id 12345",
       "providerStates": [
         {
-          "name": "I have a non-empty list of dogs"
+          "name": "there exists a product with id 12345"
         }
       ],
       "request": {
@@ -15,20 +15,13 @@
           "Accept": "application/json"
         },
         "method": "GET",
-        "path": "/products",
-        "query": {
-          "from": [
-            "today"
-          ]
-        }
+        "path": "/products/12345"
       },
       "response": {
-        "body": [
-          {
-            "id": 1,
-            "name": "Frodo"
-          }
-        ],
+        "body": {
+          "id": 1,
+          "name": "Wireless Mouse"
+        },
         "headers": {
           "Content-Type": "application/json"
         },
@@ -38,8 +31,7 @@
               "combine": "AND",
               "matchers": [
                 {
-                  "match": "type",
-                  "min": 1
+                  "match": "type"
                 }
               ]
             }

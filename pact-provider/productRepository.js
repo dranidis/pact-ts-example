@@ -1,4 +1,4 @@
-class DogRepository {
+class ProductRepository {
     constructor() {
         this.entities = [];
     }
@@ -12,7 +12,6 @@ class DogRepository {
     }
 
     insert(entity) {
-        // console.log("INSERTING", entity);
         this.entities.push(entity);
     }
 
@@ -21,10 +20,7 @@ class DogRepository {
     }
 }
 
-const dogRepository = new DogRepository();
+const productRepository = new ProductRepository();
 
-dogRepository.insert({ id: 1, name: "Hera", age: 12 });
-dogRepository.insert({ id: 2, name: "Dias" , age: 2});
-// console.log(dogRepository.fetchAll());
 
-module.exports = dogRepository;
+module.exports = productRepository;
