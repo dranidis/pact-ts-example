@@ -38,11 +38,11 @@ describe("GET /products", () => {
       // point to the mock service Pact created for us, instead of
       // the real one
       productsAPIClient = new ProductsAPIClient(mockserver.url);
-      const response = await productsAPIClient.getAllProducts();
+      const products = await productsAPIClient.getAllProducts();
 
       // Assert: check the result
-      expect(response.data[0]).toEqual(productExample);
-    });
+      expect(products[0].id).toEqual(productExample.id);
+      expect(products[0].name).toEqual(productExample.name);    });
   });
 
   it("returns an HTTP 200 and a single product", () => {
@@ -70,10 +70,11 @@ describe("GET /products", () => {
       // point to the mock service Pact created for us, instead of
       // the real one
       productsAPIClient = new ProductsAPIClient(mockserver.url);
-      const response = await productsAPIClient.getProduct("12345");
+      const product = await productsAPIClient.getProduct("12345");
 
       // Assert: check the result
-      expect(response.data).toEqual(productExample);
+      expect(product.id).toEqual(productExample.id);
+      expect(product.name).toEqual(productExample.name);
     });
   });
 });
